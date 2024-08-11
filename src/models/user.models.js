@@ -50,10 +50,10 @@ const userSchema = new Schema(
         timestamps: true
     }
 )
-
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
-    this.password = bcrypt.hash(this.password, 10)
+//middlewares
+userSchema.pre("save", async function (next) { //Defines a pre hook for the model.
+    if (!this.isModified("password")) return next();//Returns true if any of the given paths are modified, else false. If no arguments, returns true if any path in this document is modified.
+    this.password = bcrypt.hash(this.password, 10)//The data to be encrypted.
     next()
 })
 //custom methods
@@ -62,7 +62,7 @@ userSchema.methods.isPasswordCorrect = async function
     return await bcrypt.compare(password, this.password)
 }
 userSchema.methods.generateAccessToken = function () {
-    return jwt.sign(
+    return jwt.sign( //Synchronously sign the given payload into a JSON Web Token string payload
         {
             _id: this._id,
             email: this.email,
