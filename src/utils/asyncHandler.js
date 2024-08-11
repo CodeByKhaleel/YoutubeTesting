@@ -11,7 +11,7 @@ export {asyncHandler}
 
 
 
-
+ 
 
 //try-catch method---
 // let asyncHandler = (fn) => async (req,res,next) => {
